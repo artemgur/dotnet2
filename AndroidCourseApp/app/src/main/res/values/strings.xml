@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Android Course App</string>
+    <string name="button_sign_in">Sign in</string>
+    <string name="email_hint">Email address</string>
+    <string name="password_hint">Password</string>
+    <string name="invalid_email">Email is invalid</string>
+    <string name="invalid_password">Password must contain an uppercase letter, a lowercase letter and a number</string>
+    <string name="incorrect_password">Incorrect password</string>
+    <string name="incorrect_email">User with this email doesn\'t exist</string>
+    <string name="exit">Exit</string>
+</resources>
