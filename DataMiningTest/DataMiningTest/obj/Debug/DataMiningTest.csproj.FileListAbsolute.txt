@@ -6,3 +6,10 @@ C:\Users\artemgur\RiderProjects\DataMiningTest\DataMiningTest\obj\Debug\DataMini
 C:\Users\artemgur\RiderProjects\DataMiningTest\DataMiningTest\obj\Debug\DataMiningTest.csproj.CopyComplete
 C:\Users\artemgur\RiderProjects\DataMiningTest\DataMiningTest\obj\Debug\DataMiningTest.exe
 C:\Users\artemgur\RiderProjects\DataMiningTest\DataMiningTest\obj\Debug\DataMiningTest.pdb
+C:\Users\artemgur\Documents\GitHub\artemgur\DataMiningTest\DataMiningTest\bin\Debug\DataMiningTest.exe
+C:\Users\artemgur\Documents\GitHub\artemgur\DataMiningTest\DataMiningTest\bin\Debug\ZedGraph.xml
+C:\Users\artemgur\Documents\GitHub\artemgur\DataMiningTest\DataMiningTest\obj\Debug\DataMiningTest.csprojAssemblyReference.cache
+C:\Users\artemgur\Documents\GitHub\artemgur\DataMiningTest\DataMiningTest\obj\Debug\DataMiningTest.csproj.CopyComplete
+C:\Users\artemgur\Documents\GitHub\artemgur\DataMiningTest\DataMiningTest\obj\Debug\DataMiningTest.exe
+C:\Users\artemgur\Documents\GitHub\artemgur\DataMiningTest\DataMiningTest\obj\Debug\DataMiningTest.pdb
+C:\Users\artemgur\Documents\GitHub\artemgur\DataMiningTest\DataMiningTest\bin\Debug\DataMiningTest.pdb
