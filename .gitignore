@@ -1,0 +1,6 @@
+.idea/**
+bin/Debug/**
+bin/obj/**
+!bin/Debug/*.txt
+obj/**
+*.user
