@@ -2,9 +2,9 @@
 
 namespace Calculator
 {
-	public static class Calculator
+	public static class Counter
 	{
-		public static double Calculate(double a, double b, char @operator) => @operator switch
+		public static double Count(double a, double b, char @operator) => @operator switch
 		{
 			'+' => a + b,
 			'-' => a - b,

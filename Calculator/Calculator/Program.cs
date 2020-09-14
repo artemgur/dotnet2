@@ -9,7 +9,7 @@ namespace Calculator
 			var a = ReadDouble();
 			var @operator = char.Parse(Console.ReadLine());
 			var b = ReadDouble();
-			Console.WriteLine(Calculator.Calculate(a, b, @operator));
+			Console.WriteLine(Counter.Count(a, b, @operator));
 		}
 
 		private static double ReadDouble() => double.Parse(Console.ReadLine());
