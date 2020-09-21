@@ -1,6 +1,5 @@
 using System;
 using NUnit.Framework;
-using Calculator;
 
 namespace CalculatorTests
 {
@@ -9,26 +8,26 @@ namespace CalculatorTests
 		[TestCase(0, 0)]
 		[TestCase(2, 2)]
 		[TestCase(5, -7)]
-		public static void AdditionTest(double a, double b) => Assert.AreEqual(a + b, Counter.Count(a, b, '+'));
+		public static void TestSum(double a, double b) => Assert.AreEqual(a + b, Calculator.Calculator.Calculate(a, b, '+'));
 
 		[TestCase(0, 0)]
 		[TestCase(2, 2)]
 		[TestCase(5, -7)]
-		public static void SubtractionTest(double a, double b) => Assert.AreEqual(a - b, Counter.Count(a, b, '-'));
+		public static void TestSubtraction(double a, double b) => Assert.AreEqual(a - b, Calculator.Calculator.Calculate(a, b, '-'));
 
 		[TestCase(0, 0)]
 		[TestCase(2, 2)]
 		[TestCase(5, -7)]
-		public static void MultiplicationTest(double a, double b) => Assert.AreEqual(a * b, Counter.Count(a, b, '*'));
+		public static void TestMultiplication(double a, double b) => Assert.AreEqual(a * b, Calculator.Calculator.Calculate(a, b, '*'));
 
 		[TestCase(0, 0)]
 		[TestCase(2, 2)]
 		[TestCase(5, -7)]
-		public static void DivisionTest(double a, double b) => Assert.AreEqual(a / b, Counter.Count(a, b, '/'));
+		public static void TestDivision(double a, double b) => Assert.AreEqual(a / b, Calculator.Calculator.Calculate(a, b, '/'));
 
 		[TestCase(0, 5)]
 		[TestCase(2, 2)]
 		[TestCase(5, -7)]
-		public static void PowerTest(double a, double b) => Assert.AreEqual(Math.Pow(a, b), Counter.Count(a, b, '^'));
+		public static void TestPower(double a, double b) => Assert.AreEqual(Math.Pow(a, b), Calculator.Calculator.Calculate(a, b, '^'));
 	}
 }
