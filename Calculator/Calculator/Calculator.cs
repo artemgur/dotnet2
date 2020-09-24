@@ -4,14 +4,30 @@ namespace Calculator
 {
 	public static class Calculator
 	{
-		public static double Calculate(double a, double b, char @operator) => @operator switch
+		public static double Calculate(double a, double b, char @operator)
 		{
-			'+' => a + b,
-			'-' => a - b,
-			'*' => a * b,
-			'/' => a / b,
-			'^' => Math.Pow(a, b),
-			_=> throw new NotImplementedException("The operation doesn't exist")
-		};
+			switch (@operator)
+			{
+				case '+':
+					return a + b;
+				case '-':
+					return a - b;
+				case '*':
+					return a * b;
+				case '/':
+					return Divide(a, b);
+				case '^':
+					return Math.Pow(a, b);
+				default:
+					throw new NotImplementedException("The operation doesn't exist");
+			}
+		}
+
+		private static double Divide(double a, double b)
+		{
+			if (b == 0)
+				throw new DivideByZeroException();
+			return a / b;
+		}
 	}
 }
