@@ -1,0 +1,1 @@
+[![codecov](https://codecov.io/gh/artemgur/artemgur/branch/hw2/graph/badge.svg?token=5OHU2RCJRG)](https://codecov.io/gh/artemgur/artemgur)
