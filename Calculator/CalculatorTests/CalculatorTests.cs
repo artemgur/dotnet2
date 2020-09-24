@@ -37,5 +37,11 @@ namespace CalculatorTests
 		[TestCase(4, 0.5, TestName = "Calculate_4InPower0.5_2Returned")]
 		[TestCase(5, 0, TestName = "Calculate_5InPower0_1Returned")]
 		public static void TestPower(double a, double b) => Assert.AreEqual(Math.Pow(a, b), Calculator.Calculator.Calculate(a, b, '^'), delta);
+
+		[Test]
+		public static void Calculate_InvalidOperation_NotImplementedExceptionThrown()
+		{
+			Assert.Throws(typeof(NotImplementedException), () => Calculator.Calculator.Calculate(8, 9, '$'));
+		}
 	}
 }
