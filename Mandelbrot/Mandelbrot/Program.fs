@@ -23,7 +23,7 @@ let offsetY = -1.0
 let mutable mx = -1.5
 let mutable my = -1.5
 
-let arrowStep = 0.3
+let arrowStep = 0.15
 
 let mapPlane x y s mx my =
     let fx = ((float x) * scalingFactor s) + mx
@@ -57,12 +57,16 @@ type MyForm() =
     override this.DoubleBuffered = true
     
 let onKeyDown (args:KeyEventArgs) (form:Form) =
+    let oldMx = mx
+    let oldMy = my
     match args.KeyData with
     | Keys.Right -> my <- my + arrowStep
     | Keys.Left -> my <- my - arrowStep
     | Keys.Up -> mx <- mx - arrowStep
     | Keys.Down -> mx <- mx + arrowStep
-    form.Invalidate()
+    | _ -> ignore()
+    if mx <> oldMx || my <> oldMy then
+        form.Invalidate()
     ignore()
 
 [<EntryPoint>]
@@ -70,6 +74,7 @@ let main args =
     let form = new MyForm()
     form.Width <- 1000
     form.Height <- 1000
+    form.Text <- "Множество Мандельброта"
     form.MouseWheel.Add(fun args -> onScroll args form)
     form.KeyDown.Add(fun args -> onKeyDown args form)
     form.Paint.Add(fun e -> e.Graphics.DrawImage(createImage 2.5 my mx 40, 0, 0))

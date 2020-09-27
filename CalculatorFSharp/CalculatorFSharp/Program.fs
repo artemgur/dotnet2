@@ -27,6 +27,7 @@ let calculate op a b =
             | "-" -> subtract a b
             | "*" -> multiply a b
             | "/" -> divide a b
+            | _ -> None
         return x
     }
 
