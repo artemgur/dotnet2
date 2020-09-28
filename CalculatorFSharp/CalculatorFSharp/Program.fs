@@ -7,35 +7,38 @@ type Maybe() =
         | None -> None
         | Some a -> f a
 
-    member this.Return(x) = 
+    member this.Return x = 
         Some x
         
-let maybe = new Maybe()
+let argsToTuple a b = if a=None || b=None then None else Some(a.Value,b.Value)
+        
+let maybe = Maybe()
 
-let add x y = Some(x + y)
+let add (x:float*float) = Some(fst x + snd x)
 
-let subtract x y = Some(x - y)
+let subtract (x:float*float) = Some(fst x - snd x)
 
-let multiply x y = Some(x * y)
+let multiply (x:float*float) = Some(fst x * snd x)
 
-let divide x y = if y = 0.0 then None else Some(x / y)
+let divide (x:float*float) = if snd x = 0.0 then None else Some(fst x / snd x)
 
 let parse (str:string) =
     let isNumber, num = Double.TryParse str
     if isNumber then Some(num) else None
 
-let calculate op a b =
+let calculate op (a:float option) (b:float option) =
     maybe{
+        let tuple = argsToTuple a b
         let! x = match op with
-            | "+" -> add a b
-            | "-" -> subtract a b
-            | "*" -> multiply a b
-            | "/" -> divide a b
+            | "+" -> maybe.Bind(tuple, add)
+            | "-" -> maybe.Bind(tuple, subtract)
+            | "*" -> maybe.Bind(tuple, multiply)
+            | "/" -> maybe.Bind(tuple, divide)
             | _ -> None
         return x
     }
 
-let write (t:float option) = if t=None then Console.WriteLine("Computational error. Probably you tried to divide by 0 or used invalid operator") else Console.WriteLine(t.Value)
+let write (t:float option) = if t=None then Console.WriteLine("Computational error. Probably you tried to divide by 0 or inputted invalid number or operator") else Console.WriteLine(t.Value)
 
 let calculateAndWrite op a b =
     let t = calculate op a b
@@ -46,5 +49,5 @@ let main argv =
     let a = parse (Console.ReadLine())
     let op = Console.ReadLine()
     let b = parse (Console.ReadLine())
-    if a = None || b = None then Console.WriteLine("One of parameters is not a number") else calculateAndWrite op a.Value b.Value
+    calculateAndWrite op a b
     0
