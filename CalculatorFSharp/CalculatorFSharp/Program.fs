@@ -28,12 +28,12 @@ let parse (str:string) =
 
 let calculate op (a:float option) (b:float option) =
     maybe{
-        let tuple = argsToTuple a b
+        let! tuple = argsToTuple a b
         let! x = match op with
-            | "+" -> maybe.Bind(tuple, add)
-            | "-" -> maybe.Bind(tuple, subtract)
-            | "*" -> maybe.Bind(tuple, multiply)
-            | "/" -> maybe.Bind(tuple, divide)
+            | "+" -> add tuple
+            | "-" -> subtract tuple
+            | "*" -> multiply tuple
+            | "/" -> divide tuple
             | _ -> None
         return x
     }
