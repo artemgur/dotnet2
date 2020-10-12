@@ -34,16 +34,10 @@ namespace Calculator
 		{
 			var operatorPos = s.IndexOfAny(Operators);
 			if (operatorPos == -1)
-			// {
-			// 	if (double.TryParse(s, out var x))
-			// 		return s;
-				//throw new ArgumentException("String doesn't contain valid operators and is not a number");
 				return ErrorNoOperatorString;
-			//}
 			if (double.TryParse(s.Substring(0, operatorPos), out var a) &&
 			    double.TryParse(s.Substring(operatorPos + 1), out var b))
 				return Evaluate(a, b, s[operatorPos]).ToString(CultureInfo.InvariantCulture);
-			//throw new ArgumentException("One or both of the numbers in expression are invalid");
 			return ErrorInvalidNumberString;
 		}
 
