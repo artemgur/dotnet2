@@ -21,8 +21,8 @@ let CreateAnswerAsync(response) =
         return
             match response.StatusCode with
             | 404 -> None
-            | 400 -> Some "Error. Probably you tried to divide by 0 or inputted invalid number or operator"
-            | 500 -> Some "Server error"
+            | 400 -> Some response.Headers.["calculator_result"] //Will contain error message in that case
+            | 500 -> Some "Unknown server error"
             | 200 -> Some response.Headers.["calculator_result"]
             | _ -> None
     }
@@ -36,7 +36,7 @@ let private GetRequestAsync(url) =
    
 let calculate (s:string) =
     Async.RunSynchronously (asyncMaybe{
-        let address = url + s.Replace("+", "%2B")
+        let address = url + s.Replace("+", "%2B").Replace("*", "%2A").Replace("/", "%2F")
         let! a = GetRequestAsync address
         let! b = CreateAnswerAsync a
         return Some b
@@ -45,7 +45,7 @@ let calculate (s:string) =
 let write (s:string option) =
     match s with
     | Some x -> Console.WriteLine(x)
-    | None -> Console.WriteLine "Computational error. Probably you tried to divide by 0 or inputted invalid number or operator"
+    | None -> Console.WriteLine "Unknown error"
 
 [<EntryPoint>]
 let main argv =
