@@ -21,7 +21,7 @@ namespace Calculator
 			{
 				var a = Calculator.Calculate(context.Request.Query[parameterName]);
 				context.Response.Headers.Add("calculator_result", a);
-				if (!double.TryParse(a, out var x))
+				if (a == Calculator.ErrorInvalidNumberString || a == Calculator.ErrorNoOperatorString || a == Calculator.ErrorDivideByZeroString)
 					context.Response.StatusCode = 400;
 				next.Invoke(context);
 			}
