@@ -7,7 +7,7 @@ namespace CalculatorExpression
 	{
 		static void Main(string[] args)
 		{
-			var expression = ExpressionTreeBuilder.Build("1.5/5");
+			var expression = ExpressionTreeBuilder.Build("2*2*2/4");
 			var lambda = Expression.Lambda<Func<double>>(expression);
 			var compiled = lambda.Compile();
 			Console.WriteLine(compiled());

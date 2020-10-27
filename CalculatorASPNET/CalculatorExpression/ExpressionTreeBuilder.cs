@@ -80,6 +80,8 @@ namespace CalculatorExpression
 						if (current.Next.Next != null)
 							current.Next.Next.Previous = newNode;
 					}
+					if (IsDoubleJumpPossible(current))
+						current = current.Next.Next;
 					current = current.Next.Next;
 				}
 			}
@@ -126,5 +128,16 @@ namespace CalculatorExpression
 				'/' => Expression.Divide(current.Previous.Expression, current.Next.Expression),
 				_ => throw new ArgumentException("Syntax error: invalid operator")
 			};
+
+
+		///Double jump ensures that same priority operators will be evaluated like (2+2)+(2+2) and not like ((2+2)+2)+2, which is useful for multithreaded evaluation
+		private static bool IsDoubleJumpPossible(LinkedListNode current)//TODO test
+		{
+			return current.Next.Next != null &&
+			       (lowPriorityOperations.Contains(current.Operator) &&
+			        lowPriorityOperations.Contains(current.Next.Next.Operator)
+			        || highPriorityOperations.Contains(current.Operator) &&
+			        highPriorityOperations.Contains(current.Next.Next.Operator));
+		}
 	}
 }
