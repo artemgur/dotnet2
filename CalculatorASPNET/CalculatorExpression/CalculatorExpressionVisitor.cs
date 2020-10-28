@@ -11,7 +11,7 @@ namespace CalculatorExpression
 	public class CalculatorExpressionVisitor : ExpressionVisitor
 	{
 		private static string url = "https://localhost:5001/calculate?expression=";
-		public readonly ConcurrentDictionary<Expression, Task<double>> Tasks = new ConcurrentDictionary<Expression, Task<double>>();
+		private readonly ConcurrentDictionary<Expression, Task<double>> Tasks = new ConcurrentDictionary<Expression, Task<double>>();
 		public Task<double> MainTask;
 
 		public override Expression Visit(Expression expression)
@@ -27,10 +27,11 @@ namespace CalculatorExpression
 				Tasks.Remove(e.Left, out var a);
 				Tasks.Remove(e.Right, out var b);
 				var address = url + results[0] + GetOperator(e) + results[1];
-				//Console.WriteLine(address);
 				var request = WebRequest.Create(address);
 				var response = await request.GetResponseAsync();
-				return double.Parse(response.Headers["calculator_result"], CultureInfo.InvariantCulture);
+				var result = double.Parse(response.Headers["calculator_result"], CultureInfo.InvariantCulture);
+				Console.WriteLine(results[0] + GetOperatorForWrite(e) + results[1] + "=" + result);
+				return result;
 			});
 			if (MainTask == null)
 				MainTask = task;
@@ -47,5 +48,15 @@ namespace CalculatorExpression
 				ExpressionType.Divide => "%2F",
 				_ => throw new ArgumentException("Expression tree contains not supported operations")
 			};
+		
+		private static string GetOperatorForWrite(BinaryExpression expression) =>
+		expression.NodeType switch
+		{
+			ExpressionType.Add => "+",
+			ExpressionType.Subtract => "-",
+			ExpressionType.Multiply => "*",
+			ExpressionType.Divide => "/",
+			_ => throw new ArgumentException("Expression tree contains not supported operations")
+		};
 	}
 }
