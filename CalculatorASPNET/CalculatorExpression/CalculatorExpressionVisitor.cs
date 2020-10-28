@@ -13,24 +13,6 @@ namespace CalculatorExpression
 		private static string url = "https://localhost:5001/calculate?expression=";
 		public readonly ConcurrentDictionary<Expression, Task<double>> Tasks = new ConcurrentDictionary<Expression, Task<double>>();
 		public Task<double> MainTask;
-		
-		// protected override Expression VisitBinary(BinaryExpression node)
-		// {
-		// 	
-		// 	return node;
-		// }
- 	//
-		// protected override Expression VisitConstant(ConstantExpression node)
-		// {
-		// 	
-		// 	return node;
-		// }
- 	//
-		// protected override Expression VisitParameter(ParameterExpression node)
-		// {
-		// 	
-		// 	return node;
-		// }
 
 		public override Expression Visit(Expression expression)
 		{
@@ -55,23 +37,6 @@ namespace CalculatorExpression
 			Tasks[expression] = task;
 			return expression;
 		}
-
-		// private void GetExpressionResult(Expression expression)
-		// {
-		// 	var task = Task.Run(async () =>
-		// 	{
-		// 		if (expression is ConstantExpression e1)
-		// 			return (double)e1.Value;
-		// 		var e = (BinaryExpression) expression;
-		// 		var results = await Task.WhenAll(Tasks[e.Left], Tasks[e.Right]);
-		// 		Tasks.Remove(e.Left, out var a);
-		// 		Tasks.Remove(e.Right, out var b);
-		// 		var request = WebRequest.Create(url + results[0] + GetOperator(e) + results[1]);
-		// 		var response = await request.GetResponseAsync();
-		// 		return double.Parse(response.Headers["calculator_result"]);
-		// 	});
-		// 	Tasks[expression] = task;
-		// }
 
 		private static string GetOperator(BinaryExpression expression) =>
 			expression.NodeType switch

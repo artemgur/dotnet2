@@ -3,9 +3,9 @@ using System.Threading.Tasks;
 
 namespace CalculatorExpression
 {
-	class Program
+	public static class Program
 	{
-		static async Task Main(string[] args)
+		public static async Task Main()
 		{
 			Console.WriteLine(await Calculator.CalculateAsync(Console.ReadLine()));
 		}

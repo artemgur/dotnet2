@@ -6,12 +6,8 @@ namespace CalculatorExpression
 {
 	public static class ExpressionTreeBuilder
 	{
-		// private static string parameterRegex = @"(\((?>\((?<c>)|[^()]+|\)(?<-c>))*(?(c)(?!))\))|(-?\d+(.\d+)?)";
-		//
-		// private static Regex HighPrioritySequenceRegex = new Regex($@"{parameterRegex}((\*|/){parameterRegex}){{2+}}");
-		// private static Regex LowPrioritySequenceRegex = new Regex($@"(?<!(\*|/)){parameterRegex}((+|-){parameterRegex}){{2+}}(?!(\*|/))");
-		private static readonly char[] highPriorityOperations = {'*', '/'};
-		private static readonly char[] lowPriorityOperations = {'+', '-'};
+		private static readonly char[] HighPriorityOperations = {'*', '/'};
+		private static readonly char[] LowPriorityOperations = {'+', '-'};
 		
 		public static Expression Build(string str)
 		{
@@ -32,7 +28,7 @@ namespace CalculatorExpression
 					i = numberEnd;
 					continue;
 				}
-				if (highPriorityOperations.Contains(str[i]) || lowPriorityOperations.Contains(str[i]))
+				if (HighPriorityOperations.Contains(str[i]) || LowPriorityOperations.Contains(str[i]))
 				{
 					lastNode.Next = new LinkedListNode
 					{
@@ -65,7 +61,7 @@ namespace CalculatorExpression
 				var current = firstNode.Next;
 				while (current != null)//Only operator nodes matter, so penultimate node is the last interesting one
 				{
-					if (!(lowPriorityOperations.Contains(current.Operator) && !AreOnlyLowPrioritiesAround(current)))
+					if (!(LowPriorityOperations.Contains(current.Operator) && !AreOnlyLowPrioritiesAround(current)))
 					{
 						var newNode = new LinkedListNode
 						{
@@ -80,8 +76,8 @@ namespace CalculatorExpression
 						if (current.Next.Next != null)
 							current.Next.Next.Previous = newNode;
 					}
-					if (IsDoubleJumpPossible(current))
-						current = current.Next.Next;
+					//if (IsDoubleJumpPossible(current)) //Apparently that leads to incorrect results
+					//	current = current.Next.Next;
 					current = current.Next.Next;
 				}
 			}
@@ -115,8 +111,8 @@ namespace CalculatorExpression
 
 		private static bool AreOnlyLowPrioritiesAround(LinkedListNode node)
 		{
-			return (node.Previous.Previous == null || lowPriorityOperations.Contains(node.Previous.Previous.Operator))
-			       && (node.Next.Next == null || lowPriorityOperations.Contains(node.Next.Next.Operator));
+			return (node.Previous.Previous == null || LowPriorityOperations.Contains(node.Previous.Previous.Operator))
+			       && (node.Next.Next == null || LowPriorityOperations.Contains(node.Next.Next.Operator));
 		}
 
 		private static Expression ExpressionFromOperatorNode(LinkedListNode current) =>
@@ -130,10 +126,10 @@ namespace CalculatorExpression
 			};
 
 
-		///Double jump ensures that same priority operators will be evaluated like (2+2)+(2+2) and not like ((2+2)+2)+2, which is useful for multithreaded evaluation
-		private static bool IsDoubleJumpPossible(LinkedListNode current)//TODO test
-		{
-			return current.Next.Next != null && current.Operator == current.Next.Next.Operator;
-		}
+		// ///Double jump ensures that same priority operators will be evaluated like (2+2)+(2+2) and not like ((2+2)+2)+2, which is useful for multithreaded evaluation
+		// private static bool IsDoubleJumpPossible(LinkedListNode current)//TODO test
+		// {
+		// 	return current.Next.Next != null && current.Operator == current.Next.Next.Operator;
+		// }
 	}
 }
