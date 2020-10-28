@@ -133,11 +133,7 @@ namespace CalculatorExpression
 		///Double jump ensures that same priority operators will be evaluated like (2+2)+(2+2) and not like ((2+2)+2)+2, which is useful for multithreaded evaluation
 		private static bool IsDoubleJumpPossible(LinkedListNode current)//TODO test
 		{
-			return current.Next.Next != null &&
-			       (lowPriorityOperations.Contains(current.Operator) &&
-			        lowPriorityOperations.Contains(current.Next.Next.Operator)
-			        || highPriorityOperations.Contains(current.Operator) &&
-			        highPriorityOperations.Contains(current.Next.Next.Operator));
+			return current.Next.Next != null && current.Operator == current.Next.Next.Operator;
 		}
 	}
 }

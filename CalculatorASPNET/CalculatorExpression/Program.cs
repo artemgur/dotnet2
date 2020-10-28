@@ -1,16 +1,13 @@
 ﻿using System;
-using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace CalculatorExpression
 {
 	class Program
 	{
-		static void Main(string[] args)
+		static async Task Main(string[] args)
 		{
-			var expression = ExpressionTreeBuilder.Build("2*2*2/4");
-			var lambda = Expression.Lambda<Func<double>>(expression);
-			var compiled = lambda.Compile();
-			Console.WriteLine(compiled());
+			Console.WriteLine(await Calculator.CalculateAsync(Console.ReadLine()));
 		}
 	}
 }
