@@ -8,8 +8,7 @@ namespace CalculatorExpression
 		{
 			var visitor = new CalculatorExpressionVisitor();
 			var e = ExpressionTreeBuilder.Build(expression);
-			visitor.Visit(e);
-			return await visitor.MainTask;
+			return await visitor.VisitTree(e);
 		}
 	}
 }

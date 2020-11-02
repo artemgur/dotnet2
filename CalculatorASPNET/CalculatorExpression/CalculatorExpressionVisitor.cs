@@ -12,11 +12,12 @@ namespace CalculatorExpression
 	{
 		private static string url = "https://localhost:5001/calculate?expression=";
 		private readonly ConcurrentDictionary<Expression, Task<double>> Tasks = new ConcurrentDictionary<Expression, Task<double>>();
-		public Task<double> MainTask;
 
-		public override Expression Visit(Expression expression)
+		public Task<double> VisitTree(Expression expression) => GetTask(expression);
+
+		private Task<double> GetTask(Expression expression)
 		{
-			var task = Task.Run(async () =>
+			return Task.Run(async () =>
 			{
 				if (expression is ConstantExpression e1)
 					return (double)e1.Value;
@@ -33,8 +34,11 @@ namespace CalculatorExpression
 				Console.WriteLine(results[0] + GetOperatorForWrite(e) + results[1] + "=" + result);
 				return result;
 			});
-			if (MainTask == null)
-				MainTask = task;
+		}
+
+		public override Expression Visit(Expression expression)
+		{
+			var task = GetTask(expression);
 			Tasks[expression] = task;
 			return expression;
 		}
