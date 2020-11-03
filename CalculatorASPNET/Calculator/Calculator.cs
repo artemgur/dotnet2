@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using System.Linq;
 
 namespace Calculator
 {
@@ -32,7 +33,8 @@ namespace Calculator
 
 		public static string Calculate(string s)
 		{
-			var operatorPos = s.IndexOfAny(Operators);
+			s = new string(s.Where(c => c != '(' && c != ')').ToArray()); //To support expressions like 2+(-9)
+			var operatorPos = s.IndexOfAny(Operators, 1);//if s[0] is operator, either expression is invalid, or it is '-' and first number is negative
 			if (operatorPos == -1)
 				return ErrorNoOperatorString;
 			if (double.TryParse(s.Substring(0, operatorPos), out var a) &&
