@@ -8,6 +8,8 @@ Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "CalculatorFSharpProxy", "Ca
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalculatorExpression", "CalculatorExpression\CalculatorExpression.csproj", "{AD7BA8A4-C77B-4715-AD87-ABBBE9CF27A0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalculatorExpressionTests", "CalculatorExpressionTests\CalculatorExpressionTests.csproj", "{D188E907-630C-442A-B3BA-8BB8491FC6D2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +32,9 @@ Global
 		{AD7BA8A4-C77B-4715-AD87-ABBBE9CF27A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AD7BA8A4-C77B-4715-AD87-ABBBE9CF27A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AD7BA8A4-C77B-4715-AD87-ABBBE9CF27A0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D188E907-630C-442A-B3BA-8BB8491FC6D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D188E907-630C-442A-B3BA-8BB8491FC6D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D188E907-630C-442A-B3BA-8BB8491FC6D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D188E907-630C-442A-B3BA-8BB8491FC6D2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

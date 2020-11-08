@@ -37,8 +37,9 @@ namespace CalculatorExpression
 				// var request = WebRequest.Create(address);
 				// var response = await request.GetResponseAsync();
 				// var result = double.Parse(response.Headers["calculator_result"], CultureInfo.InvariantCulture);
-				var result = double.Parse(await calculator.Calculate(results[0], GetOperator(e), results[1]));
-				Console.WriteLine(results[0] + GetOperatorForWrite(e) + results[1] + "=" + result);
+				var @operator = GetOperator(e);
+				var result = double.Parse(await calculator.Calculate(results[0], @operator, results[1]));
+				Console.WriteLine(results[0] + @operator + results[1] + "=" + result);
 				return result;
 			});
 		}
@@ -50,23 +51,23 @@ namespace CalculatorExpression
 			return expression;
 		}
 
-		private static string GetOperator(BinaryExpression expression) =>
-			expression.NodeType switch
-			{
-				ExpressionType.Add => "%2B",
-				ExpressionType.Subtract => "-",
-				ExpressionType.Multiply => "%2A",
-				ExpressionType.Divide => "%2F",
-				_ => throw new ArgumentException("Expression tree contains not supported operations")
-			};
+		// private static string GetOperator(BinaryExpression expression) =>
+		// 	expression.NodeType switch
+		// 	{
+		// 		ExpressionType.Add => "%2B",
+		// 		ExpressionType.Subtract => "-",
+		// 		ExpressionType.Multiply => "%2A",
+		// 		ExpressionType.Divide => "%2F",
+		// 		_ => throw new ArgumentException("Expression tree contains not supported operations")
+		// 	};
 		
-		private static string GetOperatorForWrite(BinaryExpression expression) =>
+		private static char GetOperator(BinaryExpression expression) =>
 		expression.NodeType switch
 		{
-			ExpressionType.Add => "+",
-			ExpressionType.Subtract => "-",
-			ExpressionType.Multiply => "*",
-			ExpressionType.Divide => "/",
+			ExpressionType.Add => '+',
+			ExpressionType.Subtract => '-',
+			ExpressionType.Multiply => '*',
+			ExpressionType.Divide => '/',
 			_ => throw new ArgumentException("Expression tree contains not supported operations")
 		};
 	}
