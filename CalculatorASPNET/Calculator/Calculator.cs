@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Calculator
 {
-	public static class Calculator
+	public class Calculator:ICalculator
 	{
 		private static readonly char[] Operators = {'+', '-', '*', '/', '^'};
 		
@@ -31,7 +31,7 @@ namespace Calculator
 			}
 		}
 
-		public static string Calculate(string s)
+		public string Calculate(string s)
 		{
 			s = new string(s.Where(c => c != '(' && c != ')').ToArray()); //To support expressions like 2+(-9)
 			var operatorPos = s.IndexOfAny(Operators, 1);//if s[0] is operator, either expression is invalid, or it is '-' and first number is negative
