@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace CalculatorExpression
 {
@@ -7,7 +8,9 @@ namespace CalculatorExpression
 	{
 		public static async Task Main()
 		{
-			Console.WriteLine(await Calculator.CalculateAsync(Console.ReadLine()));
+			var serviceCollection = new ServiceCollection();
+			serviceCollection.AddScoped<ICalculator, ProxyCalculator>();
+			Console.WriteLine(await Calculator.CalculateAsync(Console.ReadLine(), serviceCollection));
 		}
 	}
 }
