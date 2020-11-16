@@ -1,17 +1,23 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq.Expressions;
-using System.Net;
 using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace CalculatorExpression
 {
 	public class CalculatorExpressionVisitor : ExpressionVisitor
 	{
-		private static string url = "https://localhost:5001/calculate?expression=";
 		private readonly ConcurrentDictionary<Expression, Task<double>> Tasks = new ConcurrentDictionary<Expression, Task<double>>();
+		private readonly ServiceProvider serviceProvider;
+		private readonly ICalculator calculator;
+
+		public CalculatorExpressionVisitor(ServiceCollection serviceCollection)
+		{
+			serviceProvider = serviceCollection.BuildServiceProvider();
+			calculator = serviceProvider.GetService<ICalculator>();
+		}
 
 		public Task<double> VisitTree(Expression expression) => GetTask(expression);
 
@@ -27,11 +33,13 @@ namespace CalculatorExpression
 				var results = await Task.WhenAll(Tasks[e.Left], Tasks[e.Right]);
 				Tasks.Remove(e.Left, out var a);
 				Tasks.Remove(e.Right, out var b);
-				var address = url + results[0] + GetOperator(e) + results[1];
-				var request = WebRequest.Create(address);
-				var response = await request.GetResponseAsync();
-				var result = double.Parse(response.Headers["calculator_result"], CultureInfo.InvariantCulture);
-				Console.WriteLine(results[0] + GetOperatorForWrite(e) + results[1] + "=" + result);
+				// var address = url + results[0] + GetOperator(e) + results[1];
+				// var request = WebRequest.Create(address);
+				// var response = await request.GetResponseAsync();
+				// var result = double.Parse(response.Headers["calculator_result"], CultureInfo.InvariantCulture);
+				var @operator = GetOperator(e);
+				var result = double.Parse(await calculator.Calculate(results[0], @operator, results[1]));
+				Console.WriteLine(results[0] + @operator + results[1] + "=" + result);
 				return result;
 			});
 		}
@@ -43,23 +51,23 @@ namespace CalculatorExpression
 			return expression;
 		}
 
-		private static string GetOperator(BinaryExpression expression) =>
-			expression.NodeType switch
-			{
-				ExpressionType.Add => "%2B",
-				ExpressionType.Subtract => "-",
-				ExpressionType.Multiply => "%2A",
-				ExpressionType.Divide => "%2F",
-				_ => throw new ArgumentException("Expression tree contains not supported operations")
-			};
+		// private static string GetOperator(BinaryExpression expression) =>
+		// 	expression.NodeType switch
+		// 	{
+		// 		ExpressionType.Add => "%2B",
+		// 		ExpressionType.Subtract => "-",
+		// 		ExpressionType.Multiply => "%2A",
+		// 		ExpressionType.Divide => "%2F",
+		// 		_ => throw new ArgumentException("Expression tree contains not supported operations")
+		// 	};
 		
-		private static string GetOperatorForWrite(BinaryExpression expression) =>
+		private static char GetOperator(BinaryExpression expression) =>
 		expression.NodeType switch
 		{
-			ExpressionType.Add => "+",
-			ExpressionType.Subtract => "-",
-			ExpressionType.Multiply => "*",
-			ExpressionType.Divide => "/",
+			ExpressionType.Add => '+',
+			ExpressionType.Subtract => '-',
+			ExpressionType.Multiply => '*',
+			ExpressionType.Divide => '/',
 			_ => throw new ArgumentException("Expression tree contains not supported operations")
 		};
 	}

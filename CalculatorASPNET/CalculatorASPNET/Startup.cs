@@ -8,6 +8,7 @@ namespace Calculator
 	{
 		public void ConfigureServices(IServiceCollection services)
 		{
+			services.AddTransient<ICalculator, Calculator>();
 		}
 		
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

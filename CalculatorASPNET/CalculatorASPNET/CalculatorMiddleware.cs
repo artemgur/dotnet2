@@ -15,11 +15,11 @@ namespace Calculator
 			this.parameterName = parameterName;
 		}
 		
-		public async Task InvokeAsync(HttpContext context)
+		public async Task InvokeAsync(HttpContext context, ICalculator calculator)
 		{
 			try
 			{
-				var a = Calculator.Calculate(context.Request.Query[parameterName]);
+				var a = calculator.Calculate(context.Request.Query[parameterName]);
 				context.Response.Headers.Add("calculator_result", a);
 				if (a.Length == 0 || !char.IsDigit(a[0]) && a[0] != '-')
 					context.Response.StatusCode = 400;

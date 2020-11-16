@@ -6,7 +6,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Compile Include="Program.fs"/>
+        <Compile Include="CalculatorProxy.fs" />
+        <Compile Include="Program.fs" />
         <PackageReference Include="FSharp.Data" Version="3.3.3" />
     </ItemGroup>
 
