@@ -5,7 +5,7 @@ namespace CalculatorExpressionTests
 {
 	public class DirectCalculator:ICalculator
 	{
-		public async Task<string> Calculate(double a, char operation, double b) =>
-			Calculator.Calculator.Evaluate(a, b, operation);
+		public async Task<double> Calculate(double a, char operation, double b) =>
+			double.Parse(Calculator.Calculator.Evaluate(a, b, operation));
 	}
 }

@@ -8,12 +8,12 @@ namespace CalculatorExpression
 	{
 		private static string url = "https://localhost:5001/calculate?expression=";
 
-		public async Task<string> Calculate(double a, char operation, double b)
+		public async Task<double> Calculate(double a, char operation, double b)
 		{
 			var address = url + a + ConvertOperator(operation) + b;
 			var request = WebRequest.Create(address);
 			var response = await request.GetResponseAsync();
-			return response.Headers["calculator_result"];
+			return double.Parse(response.Headers["calculator_result"]);
 		}
 		
 		private static string ConvertOperator(char operation) =>
